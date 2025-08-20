@@ -248,8 +248,8 @@
     content: '';
     position: absolute;
     top: calc(100% - 1px + var(--border-bottom-width));
-    /* left: 0; */
-    /* width: 100%; */
+    left: 0;
+    width: 100%;
     height: var(--submenu-height);
     background-color: var(--color-background);
     box-shadow: var(--shadow-popover);
@@ -258,7 +258,6 @@
     transition: height var(--submenu-animation-speed) var(--ease-out-cubic),
       opacity var(--animation-speed-slow) var(--ease-out-cubic) var(--animation-speed-fast);
     z-index: calc(var(--layer-header-menu) - 1);
-    max-width: 210px !important;
   }
 
   /** mega menu **/
@@ -287,14 +286,12 @@
     background-color: var(--color-background);
     position: absolute;
     width: 100%;
-    /* left: 0; */
+    left: 0;
     top: calc(100% - 1px + var(--border-bottom-width));
     z-index: var(--layer-header-menu);
     padding-inline: var(--padding-inline);
     clip-path: rect(0 100% var(--submenu-height) 0); /* stylelint-disable-line */
     transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic);
-    max-width: 210px !important;
-    
   }
 
   /* Show the submenus on hover */

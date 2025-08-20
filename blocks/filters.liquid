@@ -457,9 +457,7 @@
 
   .facets-block-wrapper {
     @media screen and (min-width: 750px) {
-      max-width: 1170px;
-      margin: 0 auto;
-      align-items: center;
+      margin: var(--facets-margin);
       grid-column: var(--grid-column--desktop);
     }
   }
@@ -650,7 +648,7 @@
 
   .facets:not(.facets--drawer) .facets__filters-wrapper {
     @media screen and (min-width: 750px) {
-      margin-inline-end: 780px;
+      margin-inline-end: var(--margin-md);
     }
   }
 

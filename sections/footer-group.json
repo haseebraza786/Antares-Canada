@@ -200,7 +200,7 @@
         "divider_hFm3am",
         "group_tbFfTQ"
       ],
-      "name": "footer email",
+      "name": "Footer",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -843,7 +843,7 @@
         "group_Dxfjhj",
         "footer_utilities_CGDXei"
       ],
-      "name": "footer second part",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -976,7 +976,7 @@
       "block_order": [
         "group_ePfPnD"
       ],
-      "name": "copyright seection",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,

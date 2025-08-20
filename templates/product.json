@@ -136,7 +136,7 @@
                 "price_tVjtKg": {
                   "type": "price",
                   "settings": {
-                    "show_sale_price_first": false,
+                    "show_sale_price_first": true,
                     "show_installments": false,
                     "show_tax_info": false,
                     "type_preset": "paragraph",
@@ -154,24 +154,11 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
-                },
-                "review_niKDqV": {
-                  "type": "review",
-                  "name": "t:names.product_review_stars",
-                  "settings": {
-                    "stars_style": "shaded",
-                    "show_number": true,
-                    "rating_color": "foreground",
-                    "type_preset": "paragraph",
-                    "alignment": "left"
-                  },
-                  "blocks": {}
                 }
               },
               "block_order": [
                 "text_xrnftG",
-                "price_tVjtKg",
-                "review_niKDqV"
+                "price_tVjtKg"
               ]
             },
             "divider_VJhene": {
@@ -460,14 +447,11 @@
           ]
         }
       },
-      "custom_css": [
-        "h2 {font-size: 48px !important;}"
-      ],
       "settings": {
-        "content_width": "content-full-width",
+        "content_width": "content-center-aligned",
         "desktop_media_position": "left",
-        "equal_columns": true,
-        "limit_details_width": true,
+        "equal_columns": false,
+        "limit_details_width": false,
         "gap": 48,
         "color_scheme": "scheme-1",
         "padding-block-start": 20,
@@ -531,14 +515,14 @@
                 "tab_3_content": "<p>The Pro Elite BJJ Gi represents the pinnacle of martial arts apparel engineering. Crafted from premium 450gsm pearl weave cotton, this gi delivers exceptional durability while maintaining the flexibility essential for advanced techniques.<br/><br/>Features include reinforced stress points, traditional cut for optimal mobility, and pre-shrunk fabric to ensure consistent fit. The jacket features a classic lapel design with contrast stitching, while the pants include a drawstring waist and reinforced knees.<br/><br/>Perfect for training and competition, this gi meets all IBJJF regulations and comes with a satisfaction guarantee.<br/><br/></p>",
                 "active_tab_color": "#000000",
                 "inactive_tab_color": "#666666",
-                "active_tab_weight": "500",
-                "tab_font_size": 18,
+                "active_tab_weight": "600",
+                "tab_font_size": 16,
                 "tab_padding": 16,
                 "tab_spacing": 32,
                 "underline_thickness": 2,
                 "border_color": "#e6e6e6",
                 "title_color": "#000000",
-                "title_font_size": 24,
+                "title_font_size": 20,
                 "title_font_weight": "600",
                 "title_margin": 16,
                 "content_color": "#333333",
@@ -557,10 +541,7 @@
       "block_order": [
         "group_aawNPj"
       ],
-      "custom_css": [
-        "p {font-size: 16px !important;}"
-      ],
-      "name": "Description Tabs",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -585,7 +566,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 30,
+        "padding-block-start": 0,
         "padding-block-end": 0
       }
     },
@@ -667,7 +648,7 @@
       "block_order": [
         "group_9JYaG4"
       ],
-      "name": "CUSTOMER REVIEW",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,
@@ -692,7 +673,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 30,
+        "padding-block-start": 0,
         "padding-block-end": 0
       }
     },

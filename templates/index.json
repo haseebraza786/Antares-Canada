@@ -450,7 +450,7 @@
       "block_order": [
         "group_U7iHQA"
       ],
-      "name": "home banner",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1338,7 +1338,7 @@
       "block_order": [
         "group_Ugriwd"
       ],
-      "name": "support icons",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1553,7 +1553,7 @@
         "group_GJ7LnD",
         "group_QCmJwV"
       ],
-      "name": "product Categories",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1666,7 +1666,7 @@
       "block_order": [
         "group_wkcWrF"
       ],
-      "name": "Antares About Us",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1953,7 +1953,7 @@
         "group_fhMrDU",
         "group_bUBbjr"
       ],
-      "name": "Featured Products",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -2160,7 +2160,7 @@
         "h2 {color: #ffffff;}",
         "p {color: #ffffff;}"
       ],
-      "name": "free shipping banner",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,
@@ -2562,7 +2562,7 @@
       "block_order": [
         "group_iAehfr"
       ],
-      "name": "Customers Reactions",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -3122,7 +3122,7 @@
       "block_order": [
         "group_8GUHRw"
       ],
-      "name": "Why Antares",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -3310,7 +3310,7 @@
         "group_gXCKkP",
         "group_Ejhmmd"
       ],
-      "name": "home blogs",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -3823,7 +3823,7 @@
       "block_order": [
         "group_iKPkmc"
       ],
-      "name": "Featured In",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
