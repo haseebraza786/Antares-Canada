@@ -1,0 +1,10 @@
+{% comment %} {%- if cart.item_count > 0 -%}
+  <span
+    class="cart-bubble--dot"
+    aria-hidden="true"
+    data-testid="{{ test_id | default: 'cart-bubble' }}"
+  ></span>
+{%- endif -%} {% endcomment %}
+ {% if cart.item_count > 0 %}
+  <span class="cart-bubble--dot"></span>
+{% endif %}

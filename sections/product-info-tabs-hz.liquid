@@ -1,0 +1,156 @@
+{% comment %}
+  Horizon-style Product Info Tabs
+  - Tabs: Description (active), Specifications, Shipping & Returns
+  - Uses product.description or a custom RTE for Description (toggle)
+{% endcomment %}
+
+{% assign uid = section.id | replace: '_', '' | downcase %}
+
+<div class="hz-tabs-{{ uid }}" data-tabs>
+  <!-- Tabs -->
+  <div class="hz-tabs__nav">
+    <button class="hz-tab is-active" role="tab" aria-selected="true" aria-controls="hz-tab-desc-{{ uid }}" id="hz-tabbtn-desc-{{ uid }}">
+      {{ section.settings.label_desc }}
+    </button>
+    <button class="hz-tab" role="tab" aria-selected="false" aria-controls="hz-tab-specs-{{ uid }}" id="hz-tabbtn-specs-{{ uid }}">
+      {{ section.settings.label_specs }}
+    </button>
+    <button class="hz-tab" role="tab" aria-selected="false" aria-controls="hz-tab-ship-{{ uid }}" id="hz-tabbtn-ship-{{ uid }}">
+      {{ section.settings.label_ship }}
+    </button>
+  </div>
+
+  <!-- Divider -->
+  <div class="hz-tabs__divider"></div>
+
+  <!-- Panels -->
+  <div class="hz-tabs__panel is-active" id="hz-tab-desc-{{ uid }}" role="tabpanel" aria-labelledby="hz-tabbtn-desc-{{ uid }}">
+    {% if section.settings.use_product_description and product %}
+      {% if product.description != blank %}
+        <h3 class="hz-tabs__title">{{ section.settings.title_desc }}</h3>
+        <div class="hz-tabs__body rte">
+          {{ product.description }}
+        </div>
+      {% endif %}
+    {% else %}
+      {% if section.settings.desc_rte != blank %}
+        <h3 class="hz-tabs__title">{{ section.settings.title_desc }}</h3>
+        <div class="hz-tabs__body rte">
+          {{ section.settings.desc_rte }}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="hz-tabs__panel" id="hz-tab-specs-{{ uid }}" role="tabpanel" aria-labelledby="hz-tabbtn-specs-{{ uid }}">
+    {% if section.settings.specs_rte != blank %}
+      <h3 class="hz-tabs__title">{{ section.settings.title_specs }}</h3>
+      <div class="hz-tabs__body rte">
+        {{ section.settings.specs_rte }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="hz-tabs__panel" id="hz-tab-ship-{{ uid }}" role="tabpanel" aria-labelledby="hz-tabbtn-ship-{{ uid }}">
+    {% if section.settings.ship_rte != blank %}
+      <h3 class="hz-tabs__title">{{ section.settings.title_ship }}</h3>
+      <div class="hz-tabs__body rte">
+        {{ section.settings.ship_rte }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% style %}
+.hz-tabs-{{ uid }}{
+  background: transparent;
+}
+.hz-tabs-{{ uid }} .hz-tabs__nav{
+  display:flex; gap:24px; align-items:flex-end;
+}
+.hz-tabs-{{ uid }} .hz-tab{
+  background:transparent; border:0; padding:0 0 10px; margin:0;
+  font: 500 14px/1 var(--font-body-family, inherit);
+  color: #8a8a8a; cursor:pointer; position:relative;
+}
+.hz-tabs-{{ uid }} .hz-tab.is-active{
+  color:#111;
+  font-weight:600;
+}
+.hz-tabs-{{ uid }} .hz-tab.is-active::after{
+  content:""; position:absolute; left:0; right:0; bottom:-1px;
+  height:2px; background:#111; border-radius:1px;
+}
+.hz-tabs-{{ uid }} .hz-tabs__divider{
+  height:1px; background:#e5e5e5; margin-bottom:18px;
+}
+.hz-tabs-{{ uid }} .hz-tabs__panel{ display:none; }
+.hz-tabs-{{ uid }} .hz-tabs__panel.is-active{ display:block; }
+.hz-tabs-{{ uid }} .hz-tabs__title{
+  margin:0 0 8px; color:#111;
+  font: 600 16px/1.3 var(--font-body-family, inherit);
+}
+.hz-tabs-{{ uid }} .hz-tabs__body{
+  color:#333; font: 400 14px/1.7 var(--font-body-family, inherit);
+  max-width: 90ch;
+}
+@media (min-width: 990px){
+  .hz-tabs-{{ uid }} .hz-tab{ font-size:15px; }
+  .hz-tabs-{{ uid }} .hz-tabs__title{ font-size:18px; }
+  .hz-tabs-{{ uid }} .hz-tabs__body{ font-size:14px; }
+}
+{% endstyle %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const root = document.querySelector('.hz-tabs-{{ uid }}[data-tabs]');
+  if(!root) return;
+  const tabs = Array.from(root.querySelectorAll('.hz-tab'));
+  const panels = Array.from(root.querySelectorAll('.hz-tabs__panel'));
+
+  function activate(idx){
+    tabs.forEach((t,i)=>{
+      const active = i===idx;
+      t.classList.toggle('is-active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+      panels[i].classList.toggle('is-active', active);
+    });
+  }
+
+  tabs.forEach((btn, i)=>{
+    btn.addEventListener('click', ()=>activate(i));
+    btn.addEventListener('keydown', (e)=>{
+      if(e.key==='ArrowRight') activate((i+1)%tabs.length);
+      if(e.key==='ArrowLeft')  activate((i-1+tabs.length)%tabs.length);
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Product info tabs",
+  "settings": [
+    { "type": "header", "content": "Tabs labels" },
+    { "type": "text", "id": "label_desc", "label": "Description tab label", "default": "Description" },
+    { "type": "text", "id": "label_specs", "label": "Specifications tab label", "default": "Specifications" },
+    { "type": "text", "id": "label_ship", "label": "Shipping & Returns tab label", "default": "Shipping & Returns" },
+
+    { "type": "header", "content": "Description content" },
+    { "type": "checkbox", "id": "use_product_description", "label": "Use product.description", "default": true },
+    { "type": "text", "id": "title_desc", "label": "Description title", "default": "Product Description" },
+    { "type": "richtext", "id": "desc_rte", "label": "Custom description (used when not using product.description)" },
+
+    { "type": "header", "content": "Specifications content" },
+    { "type": "text", "id": "title_specs", "label": "Specifications title", "default": "Specifications" },
+    { "type": "richtext", "id": "specs_rte", "label": "Specifications text" },
+
+    { "type": "header", "content": "Shipping & Returns content" },
+    { "type": "text", "id": "title_ship", "label": "Shipping & Returns title", "default": "Shipping & Returns" },
+    { "type": "richtext", "id": "ship_rte", "label": "Shipping & Returns text" }
+  ],
+  "presets": [
+    { "name": "Product info tabs (Horizon)" }
+  ]
+}
+{% endschema %}

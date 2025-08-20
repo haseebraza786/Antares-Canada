@@ -1,0 +1,299 @@
+{% doc %}
+  @prompt
+    a basic button without corner radius , with editable  width , max width , font size custom icons if any
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-basic-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: {{ block.settings.button_width }}%;
+    max-width: {{ block.settings.button_max_width }}px;
+    padding: 12px 24px;
+    background-color: {{ block.settings.button_background_color }};
+    color: {{ block.settings.button_text_color }};
+    border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_border_color }};
+    border-radius: 0;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: {{ block.settings.button_font_weight }};
+    font-family: {{ block.settings.button_font_family }};
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .ai-basic-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background_color }};
+    color: {{ block.settings.button_hover_text_color }};
+    border-color: {{ block.settings.button_hover_border_color }};
+  }
+
+  .ai-basic-button-{{ ai_gen_id }}:focus {
+    outline: 2px solid {{ block.settings.button_background_color }};
+    outline-offset: 2px;
+  }
+
+  .ai-basic-button-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    flex-shrink: 0;
+  }
+
+  .ai-basic-button-text-{{ ai_gen_id }} {
+    flex-grow: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-basic-button-{{ ai_gen_id }} {
+      width: {{ block.settings.button_width_mobile }}%;
+      max-width: {{ block.settings.button_max_width_mobile }}px;
+      font-size: {{ block.settings.button_font_size_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<a
+  href="{{ block.settings.button_link }}"
+  class="ai-basic-button-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+  {% if block.settings.button_link == blank %}role="button" tabindex="0"{% endif %}
+>
+  {% if block.settings.icon_position == 'left' and block.settings.custom_icon != blank %}
+    <span class="ai-basic-button-icon-{{ ai_gen_id }}">
+      {{ block.settings.custom_icon }}
+    </span>
+  {% endif %}
+
+  {% if block.settings.button_text != blank %}
+    <span class="ai-basic-button-text-{{ ai_gen_id }}">
+      {{ block.settings.button_text }}
+    </span>
+  {% endif %}
+
+  {% if block.settings.icon_position == 'right' and block.settings.custom_icon != blank %}
+    <span class="ai-basic-button-icon-{{ ai_gen_id }}">
+      {{ block.settings.custom_icon }}
+    </span>
+  {% endif %}
+</a>
+
+{% schema %}
+{
+  "name": "Basic Button",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button Content"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Click here"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "html",
+      "id": "custom_icon",
+      "label": "Custom icon (SVG code)"
+    },
+    {
+      "type": "select",
+      "id": "icon_position",
+      "label": "Icon position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+  "type": "text",
+  "id": "button_font_family",
+  "label": "Font family",
+  "default": "Arial, sans-serif"
+},
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Button Dimensions"
+    },
+    {
+      "type": "range",
+      "id": "button_width",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Button width",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "min": 100,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "button_width_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Button width (mobile)",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "button_max_width_mobile",
+      "min": 100,
+      "max": 400,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width (mobile)",
+      "default": 300
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "Button Colors"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Hover background color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Button Border"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Border color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Hover border color",
+      "default": "#333333"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Basic Button"
+    }
+  ]
+}
+{% endschema %}

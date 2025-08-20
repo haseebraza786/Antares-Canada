@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+
+h1 {font-family: "Gruppo", sans-serif !important; font-size: 56px !important; font-weight: 400 !important; line-height: 100% !important; margin-top: 0 !important;letter-spacing: 0% !important;}
+h2 {font-family: "Gruppo", sans-serif !important; font-size: 46px !important; font-weight: 400 !important; line-height: 100% !important; margin-top: 0 !important;letter-spacing: 0% !important;}
+h3 {font-family: "Gruppo", sans-serif !important; font-size: 36px !important; font-weight: 700 !important; line-height: 41.6px !important; margin-top: 0 !important;}
+
+
+h4 {font-family: "Poppins", sans-serif !important; font-size: 24px !important; font-weight: 500 !important; font-style: medium !important; line-height: 100% !important; margin-top: 0!important;}
+
+h5 {font-family: "Poppins", sans-serif !important; font-size: 20px !important; font-weight: 500 !important; font-style: medium !important; line-height: 100% !important; margin-top: 0!important;}
+
+p{
+    font-family: Poppins, sans-serif !important;
+    font-weight: 300 !important;
+    font-style: normal !important;
+    font-size: 12px !important;
+   
+    letter-spacing: 0 !important;
+    vertical-align: middle;
+}
+
+p strong,
+p b {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.page-width-1440{max-width: 1440px;}
+
+.menu-dropdown-icon {
+  display: inline-flex;
+  width: 10px;
+  height: 10px;
+  margin-left: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-dropdown-icon svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.menu-list__list-item:hover .menu-dropdown-icon svg {
+  transform: rotate(180deg); /* optional hover effect */
+}
+
+span.menu-list__link-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+}
+
+.header__row.header__row--bottom.color-scheme-5.section.section--full-width-margin.section--page-width.mobile\:hidden {
+    padding-top: 13px;
+    padding-bottom: 19px;
+}
+
+.home-banner .group-block-content.layout-panel-flex.layout-panel-flex--row.mobile-column {height: 573px;}
+
+.home-banner-image .image-block__image{object-fit: contain;width: 750px;}
+
+.group-block{
+    margin: 0 auto;
+    max-width: 1170px;
+}
+.group-block.group-block--height-fit.group-block--width-custom.border-style.spacing-style.size-style.header-text{margin: 0;}
+
+a.menu-list__link.menu-list__link {
+    padding: 0 24px;
+    color:#fff;
+}
+
+.menu-list:not(:has(.menu-list__list-item)) .menu-list__link--active{
+    padding: 0 24px;
+}
+
+.group-block.group-block--height-fill.group-block--width-fit-content.border-style.spacing-style.size-style.Why-Antares-cards {
+    width: 326px;
+    height: 207px;
+}
+
+.our-customers h2{
+  font-size:76px;
+}
+
+.group-block.group-block--height-fit.group-block--width-fill.border-style.spacing-style.size-style.our-customers {
+    width: 316px;
+    height: 273px;
+}
+
+.header__columns.spacing-style{
+    max-width: 1170px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+}
+
+.footer-menu a{
+  color:#A9A9A9;
+}
+
+.footer-contact p{
+  font-size:14px !important;
+  
+}
+.footer-contact{
+  border: #585858 1px solid;
+}
+
+.email-signup__button--integrated.email-signup__button--text
+{
+      padding: 28px 40px !important;
+    border-radius: 39px;
+    top: 0;
+    right: 0;
+}
+
+quantity-selector-component.quantity-selector{
+      border-radius: 0 !important;
+}
+
+button#BuyButtons-ProductSubmitButton-AUTh3VWE3VGc1cFVJW__add-to-cart{
+    border-radius: 0;
+    background: none;
+    border: #000000 1px solid;
+    color: #000000;
+}
+
+button.shopify-payment-button__button.shopify-payment-button__button--unbranded {
+    border-radius: 0;
+}
+
+.product-information__grid.product-information--media-left{
+  max-width: 1170px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+}
+
+.slideshow-controls__thumbnails .slideshow-control{
+  width:auto !important;
+}
+
+.slideshow-controls__thumbnails{
+    padding: 0;
+    margin: 0;
+    justify-content: space-evenly;
+    gap: 20px;
+    width: 100%;
+    height: auto;
+}
+
+.slideshow-controls__thumbnails .slideshow-control img{
+    width: 128px;
+    height: 130px;
+}
+
+.slideshow-controls__thumbnails .slideshow-control:is([aria-selected=true]){
+      outline: none !important;
+}
+
+span.price{
+    font-size: 24px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    color:red;
+}
+
+span.compare-at-price{
+    font-size: 24px;
+    font-family: 'Poppins';
+    font-weight: 400;
+}
+
+slideshow-component{
+  gap:30px;
+}
+
+quantity-selector-component.quantity-selector{
+  min-width: 172px;
+}
+
+.group-block.group-block--height-fit.group-block--width-fill.border-style.spacing-style.size-style.meet-team-cards{
+  max-width:960px;
+}
+
+.product-grid--template--18716015657152__main:is(.product-grid--grid){
+  max-width:1170px;
+}
+
+.facets__actions{
+  --to-top-gradient-background: none !important;
+}
+
+.collection-wrapper.grid.gap-style{
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+span.facets__label {
+    font-size: 16px;
+    font-family: 'Poppins';
+    font-weight: 300;
+}
+
+.price-facet__highest-price{
+  font-size: 14px;
+  font-family: 'Poppins';
+  font-weight: 300;
+}
+
+product-card:focus-within .quick-add__button, .card-gallery:hover .quick-add__button{
+  bottom: 90px;
+  right: 90px;
+}
+
+.quick-add__button{
+  border-radius: 0px !important;
+}
+
+
+/////////////
+
+.header__row[style*="--border-bottom-width: 0px"] .menu-list__submenu.color-scheme-matches-parent, .header__row[style*="--border-bottom-width: 0px"] .overflow-menu.color-scheme-matches-parent::part(overflow){
+  max-width:210px !important;
+}

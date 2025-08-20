@@ -1,0 +1,291 @@
+{% doc %}
+  @prompt
+    i want a text box  with changable font, font weight , style , size ,color all for mobile and desktop
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-text-box-{{ ai_gen_id }} {
+    width: 100%;
+    padding: {{ block.settings.padding_desktop }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-text-box-content-{{ ai_gen_id }} {
+    font-family: {{ block.settings.font_family_desktop.family }}, {{ block.settings.font_family_desktop.fallback_families }};
+    font-weight: {{ block.settings.font_weight_desktop }};
+    font-style: {{ block.settings.font_style_desktop }};
+    font-size: {{ block.settings.font_size_desktop }}px;
+    color: {{ block.settings.text_color_desktop }};
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-text-box-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_mobile }}px;
+    }
+
+    .ai-text-box-content-{{ ai_gen_id }} {
+      font-family: {{ block.settings.font_family_mobile.family }}, {{ block.settings.font_family_mobile.fallback_families }};
+      font-weight: {{ block.settings.font_weight_mobile }};
+      font-style: {{ block.settings.font_style_mobile }};
+      font-size: {{ block.settings.font_size_mobile }}px;
+      color: {{ block.settings.text_color_mobile }};
+    }
+  }
+{% endstyle %}
+
+<div class="ai-text-box-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.text_content != blank %}
+    <div class="ai-text-box-content-{{ ai_gen_id }}">
+      {{ block.settings.text_content }}
+    </div>
+  {% else %}
+    <div class="ai-text-box-content-{{ ai_gen_id }}" style="color: #999; font-style: italic;">
+      Add your text content here
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Text box",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "text_content",
+      "label": "Text content",
+      "default": "<p>Add your text content here. You can format it with rich text options.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Desktop typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_family_desktop",
+      "label": "Font family",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "select",
+      "id": "font_weight_desktop",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "100",
+          "label": "Thin"
+        },
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        },
+        {
+          "value": "900",
+          "label": "Black"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "font_style_desktop",
+      "label": "Font style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color_desktop",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Mobile typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_family_mobile",
+      "label": "Font family",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "select",
+      "id": "font_weight_mobile",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "100",
+          "label": "Thin"
+        },
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        },
+        {
+          "value": "900",
+          "label": "Black"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "font_style_mobile",
+      "label": "Font style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "text_color_mobile",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding desktop",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding mobile",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text box"
+    }
+  ]
+}
+{% endschema %}

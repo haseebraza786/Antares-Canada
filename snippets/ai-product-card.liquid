@@ -1,0 +1,247 @@
+{%- comment -%}
+  Reusable AI Product Card
+  Usage: {% render 'ai-product-card', product: product %}
+  Notes:
+  - Adds wishlist + quick-view icons (top-right)
+  - Centers an "Add to Cart" button over the image on hover (desktop)
+  - Shows rating stars with a default rating when no app data
+  - Uses /cart/add.js for quick add
+{%- endcomment -%}
+
+{%- liquid
+  assign _variant = product.selected_or_first_available_variant
+  assign _variant_id = _variant.id
+  assign _has_image = product.featured_image
+  assign _price = product.price | money
+  assign _rating = 4
+  assign _reviews_count = 50
+-%}
+
+<div class="ai-card" data-product-id="{{ product.id }}">
+  <a class="ai-card__image-wrap" href="{{ product.url }}">
+    {%- if _has_image -%}
+      <img
+        class="ai-card__image"
+        src="{{ product.featured_image | image_url: width: 600 }}"
+        alt="{{ product.featured_image.alt | escape }}"
+        loading="lazy"
+        width="600"
+        height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
+      >
+    {%- else -%}
+      <div class="ai-card__image--placeholder">
+        {{ 'product-1' | placeholder_svg_tag }}
+      </div>
+    {%- endif -%}
+  </a>
+
+  <!-- Top-right stacked actions -->
+  <div class="ai-card__actions">
+    <button
+      class="ai-card__action-btn js-ai-wishlist"
+      type="button"
+      aria-label="Add to wishlist"
+      data-product-id="{{ product.id }}"
+    >
+      <!-- Heart -->
+      <svg viewBox="0 0 24 24" class="ai-icon" aria-hidden="true">
+        <path fill="currentColor" d="M12.1 8.64l-.1.1-.11-.11A5.5 5.5 0 003.44 9a5.5 5.5 0 001.61 3.9L12 19.86l6.95-6.95A5.5 5.5 0 0012.1 8.64z"/>
+      </svg>
+    </button>
+
+    <button
+      class="ai-card__action-btn js-ai-quickview"
+      type="button"
+      aria-label="View product images"
+      data-product-id="{{ product.id }}"
+      data-image="{{ product.featured_image | image_url: width: 1200 }}"
+    >
+      <!-- Eye -->
+      <svg viewBox="0 0 24 24" class="ai-icon" aria-hidden="true">
+        <path fill="currentColor" d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12a5 5 0 115-5 5 5 0 01-5 5zm0-8a3 3 0 103 3 3 3 0 00-3-3z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Centered hover Add to Cart -->
+  <button
+    class="ai-card__add js-ai-add"
+    type="button"
+    data-variant-id="{{ _variant_id }}"
+    {% unless _variant.available %}disabled{% endunless %}
+  >
+    {%- capture cart_svg -%}{{ 'icon-cart.svg' | inline_asset_content }}{%- endcapture -%}
+    {%- if cart_svg == blank -%}
+      <!-- Fallback cart icon -->
+      <svg class="ai-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M7 18a2 2 0 102 2 2 2 0 00-2-2zm10 0a2 2 0 102 2 2 2 0 00-2-2zM7.22 6l.94 2H19a1 1 0 01.96 1.27l-1.8 6a2 2 0 01-1.92 1.46H9a2 2 0 01-1.92-1.46L5.16 6.42A1 1 0 014.2 6H3V4h2.2a2 2 0 011.88 1.2z"/>
+      </svg>
+    {%- else -%}
+      {{ cart_svg }}
+    {%- endif -%}
+    <span>Add to Cart</span>
+  </button>
+
+  <div class="ai-card__body">
+    <h3 class="ai-card__title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    <div class="ai-card__price">
+      {{ _price }}
+    </div>
+
+    <div class="ai-card__rating">
+      <span class="ai-card__stars" aria-hidden="true">
+        {%- for i in (1..5) -%}
+          <svg class="ai-star{% if i > _rating %} ai-star--empty{% endif %}" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        {%- endfor -%}
+      </span>
+      <span class="ai-card__rating-count">({{ _reviews_count }})</span>
+    </div>
+  </div>
+</div>
+
+{%- if forloop.last -%}
+  <!-- Lightweight behavior: quick add / quick view (scoped) -->
+  <script>
+    (function() {
+      function on(el, ev, fn) { el && el.addEventListener(ev, fn, { passive: true }); }
+
+      document.addEventListener('click', function(e) {
+        // Quick Add
+        var addBtn = e.target.closest('.js-ai-add');
+        if (addBtn) {
+          e.preventDefault();
+          var id = addBtn.getAttribute('data-variant-id');
+          if (!id) return;
+
+          var fd = new FormData();
+          fd.append('id', id);
+          fd.append('quantity', 1);
+
+          fetch('/cart/add.js', { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(function() {
+              // integrate with theme cart if present
+              if (window.theme && window.theme.cart && typeof window.theme.cart.refresh === 'function') {
+                window.theme.cart.refresh();
+              }
+              addBtn.classList.add('ai-card__add--added');
+              setTimeout(function(){ addBtn.classList.remove('ai-card__add--added'); }, 1200);
+            })
+            .catch(console.error);
+        }
+
+        // Quick View (simple image modal)
+        var viewBtn = e.target.closest('.js-ai-quickview');
+        if (viewBtn) {
+          e.preventDefault();
+          var src = viewBtn.getAttribute('data-image');
+          var modal = document.querySelector('.ai-img-modal');
+          if (!modal) {
+            var m = document.createElement('div');
+            m.className = 'ai-img-modal';
+            m.innerHTML = '<div class="ai-img-modal__inner"><button class="ai-img-modal__close" aria-label="Close">×</button><img class="ai-img-modal__img" alt=""></div>';
+            document.body.appendChild(m);
+            modal = m;
+            on(modal, 'click', function(ev){ if (ev.target === modal || ev.target.classList.contains('ai-img-modal__close')) modal.classList.remove('is-open'); });
+          }
+          modal.querySelector('.ai-img-modal__img').src = src;
+          modal.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+          modal.addEventListener('transitionend', function te(){ if (!modal.classList.contains('is-open')) document.body.style.overflow=''; modal.removeEventListener('transitionend', te); });
+        }
+
+        // Wishlist stub (hook to your wishlist app)
+        var wishBtn = e.target.closest('.js-ai-wishlist');
+        if (wishBtn) {
+          e.preventDefault();
+          var pid = wishBtn.getAttribute('data-product-id');
+          // TODO: integrate with your wishlist provider
+          wishBtn.classList.toggle('is-active');
+        }
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  /* Base card */
+.ai-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.ai-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+
+/* Image */
+.ai-card__image-wrap { position: relative; display:block; width:100%; aspect-ratio: 1/1; overflow:hidden; }
+.ai-card__image { width:100%; height:100%; object-fit:cover; display:block; }
+.ai-card__image--placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f4f4f4; }
+
+/* Actions (top-right) */
+.ai-card__actions {
+  position: absolute; top: 12px; right: 12px; display:flex; flex-direction:column; gap:8px; z-index:2;
+}
+.ai-card__action-btn {
+  width:36px; height:36px; border-radius:50%; border:none; display:flex; align-items:center; justify-content:center;
+  background:#fff; box-shadow: 0 2px 8px rgba(0,0,0,.12); cursor:pointer; transition: transform .2s ease, background .2s ease;
+}
+.ai-card__action-btn:hover { transform: scale(1.08); background:#f7f7f7; }
+.ai-icon { width:18px; height:18px; display:block; }
+
+/* Hover Add to Cart (centered) */
+.ai-card__add {
+  position:absolute; left:50%; top:50%; transform:translate(-50%, -50%) scale(.98);
+  display:flex; align-items:center; gap:8px; white-space:nowrap;
+  background:#000; color:#fff; border:none; border-radius:8px; padding:12px 16px; font-weight:600; cursor:pointer;
+  opacity:0; visibility:hidden; transition: opacity .25s ease, transform .25s ease, background .2s ease;
+  z-index:2;
+}
+.ai-card:hover .ai-card__add { opacity:1; visibility:visible; transform:translate(-50%, -50%) scale(1); }
+.ai-card__add:hover { background:#333; }
+.ai-card__add[disabled] { opacity:.6; cursor:not-allowed; }
+
+/* Added feedback */
+.ai-card__add--added { box-shadow: 0 0 0 3px rgba(0, 200, 0, .25) inset; }
+
+/* Body */
+.ai-card__body { padding:16px; }
+.ai-card__title { margin:0 0 8px 0; font-size:16px; line-height:1.3; font-weight:600; }
+.ai-card__title a { color:inherit; text-decoration:none; }
+.ai-card__title a:hover { text-decoration:underline; }
+.ai-card__price { font-size:14px; font-weight:700; margin-bottom:8px; }
+.ai-card__rating { display:flex; align-items:center; gap:6px; }
+.ai-card__stars { display:flex; gap:2px; }
+.ai-star { width:16px; height:16px; color:#ffc107; }
+.ai-star--empty { color:#e0e0e0; }
+.ai-card__rating-count { font-size:13px; color:#666; }
+
+/* Quick-view image modal */
+.ai-img-modal {
+  position:fixed; inset:0; background:rgba(0,0,0,.78);
+  display:flex; align-items:center; justify-content:center; z-index:1000;
+  opacity:0; visibility:hidden; transition: opacity .25s ease, visibility .25s ease;
+}
+.ai-img-modal.is-open { opacity:1; visibility:visible; }
+.ai-img-modal__inner {
+  position:relative; max-width:90%; max-height:90%; background:#fff; border-radius:8px; overflow:hidden;
+}
+.ai-img-modal__img { display:block; width:100%; height:auto; max-height:80vh; object-fit:contain; }
+.ai-img-modal__close {
+  position:absolute; top:8px; right:8px; width:36px; height:36px; border:none; border-radius:50%;
+  background:rgba(0,0,0,.7); color:#fff; font-size:20px; line-height:1; cursor:pointer;
+}
+
+/* Mobile tweak: show add button by default if you want */
+@media (max-width: 749px) {
+  .ai-card__add { opacity:1; visibility:visible; }
+}
+
+{% endstylesheet %}

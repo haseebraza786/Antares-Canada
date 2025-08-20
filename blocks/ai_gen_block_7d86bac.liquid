@@ -1,0 +1,511 @@
+
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+
+{% style %}
+  .ai-product-tabs-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ai-product-tabs__nav-{{ ai_gen_id }} {
+    display: flex;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+    margin-bottom: {{ block.settings.content_spacing }}px;
+
+  }
+
+  .ai-product-tabs__tab-{{ ai_gen_id }} {
+    background: none;
+    border: none;
+    padding: {{ block.settings.tab_padding }}px 0;
+    margin-right: {{ block.settings.tab_spacing }}px;
+    font-size: {{ block.settings.tab_font_size }}px;
+    color: {{ block.settings.inactive_tab_color }};
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+    font-weight: 400;
+  }
+
+  .ai-product-tabs__tab-{{ ai_gen_id }}:last-child {
+    margin-right: 0;
+  }
+
+  .ai-product-tabs__tab-{{ ai_gen_id }}.active {
+    color: {{ block.settings.active_tab_color }};
+    font-weight: {{ block.settings.active_tab_weight }};
+  }
+
+  .ai-product-tabs__tab-{{ ai_gen_id }}.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: {{ block.settings.underline_thickness }}px;
+    background-color: {{ block.settings.active_tab_color }};
+  }
+
+  .ai-product-tabs__content-{{ ai_gen_id }} {
+    min-height: 200px;
+  }
+
+  .ai-product-tabs__panel-{{ ai_gen_id }} {
+    display: none;
+  }
+
+  .ai-product-tabs__panel-{{ ai_gen_id }}.active {
+    display: block;
+  }
+
+  .ai-product-tabs__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: {{ block.settings.title_font_weight }};
+    color: {{ block.settings.title_color }};
+    margin: 0 0 {{ block.settings.title_margin }}px 0;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .ai-product-tabs__text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.content_font_size }}px;
+    line-height: {{ block.settings.content_line_height }};
+    color: {{ block.settings.content_color }};
+    margin: 0;
+  }
+
+  .ai-product-tabs__text-{{ ai_gen_id }} p {
+    margin: 0 0 1em 0;
+  }
+
+  .ai-product-tabs__text-{{ ai_gen_id }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-product-tabs__empty-{{ ai_gen_id }} {
+    color: {{ block.settings.content_color }};
+    opacity: 0.6;
+    font-style: italic;
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-tabs__tab-{{ ai_gen_id }} {
+      font-size: {{ block.settings.tab_font_size | times: 0.9 }}px;
+      margin-right: {{ block.settings.tab_spacing | times: 0.8 }}px;
+    }
+
+    .ai-product-tabs__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size | times: 0.9 }}px;
+    }
+
+    .ai-product-tabs__content-{{ ai_gen_id }} {
+      min-height: 150px;
+    }
+  }
+{% endstyle %}
+
+<product-tabs-{{ ai_gen_id }}
+  class="ai-product-tabs-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-product-tabs__nav-{{ ai_gen_id }}" role="tablist"><button
+      class="ai-product-tabs__tab-{{ ai_gen_id }} active"
+      role="tab"
+      aria-selected="true"
+      aria-controls="panel-description-{{ ai_gen_id }}"
+      id="tab-description-{{ ai_gen_id }}"
+      data-tab="description"
+    >
+      {{ block.settings.tab_1_label }}
+    </button>
+    <button
+      class="ai-product-tabs__tab-{{ ai_gen_id }}"
+      role="tab"
+      aria-selected="false"
+      aria-controls="panel-specifications-{{ ai_gen_id }}"
+      id="tab-specifications-{{ ai_gen_id }}"
+      data-tab="specifications"
+    >
+      {{ block.settings.tab_2_label }}
+    </button>
+    <button
+      class="ai-product-tabs__tab-{{ ai_gen_id }}"
+      role="tab"
+      aria-selected="false"
+      aria-controls="panel-shipping-{{ ai_gen_id }}"
+      id="tab-shipping-{{ ai_gen_id }}"
+      data-tab="shipping"
+    >
+      {{ block.settings.tab_3_label }}
+    </button>
+  </div>
+
+  <div class="ai-product-tabs__content-{{ ai_gen_id }}">
+    <div
+      class="ai-product-tabs__panel-{{ ai_gen_id }} active"
+      role="tabpanel"
+      aria-labelledby="tab-description-{{ ai_gen_id }}"
+      id="panel-description-{{ ai_gen_id }}"
+      data-panel="description"
+    >
+      {% if block.settings.tab_1_title != blank %}
+        <h3 class="ai-product-tabs__title-{{ ai_gen_id }}">{{ block.settings.tab_1_title }}</h3>
+      {% endif %}
+      {% if block.settings.tab_1_content != blank %}
+        <div class="ai-product-tabs__text-{{ ai_gen_id }}">{{ block.settings.tab_1_content }}</div>
+      {% else %}
+        <div class="ai-product-tabs__empty-{{ ai_gen_id }}">Add content for the {{ block.settings.tab_1_label }} tab</div>
+      {% endif %}
+    </div>
+
+    <div
+      class="ai-product-tabs__panel-{{ ai_gen_id }}"
+      role="tabpanel"
+      aria-labelledby="tab-specifications-{{ ai_gen_id }}"
+      id="panel-specifications-{{ ai_gen_id }}"
+      data-panel="specifications"
+    >
+      {% if block.settings.tab_2_title != blank %}
+        <h3 class="ai-product-tabs__title-{{ ai_gen_id }}">{{ block.settings.tab_2_title }}</h3>
+      {% endif %}
+      {% if block.settings.tab_2_content != blank %}
+        <div class="ai-product-tabs__text-{{ ai_gen_id }}">{{ block.settings.tab_2_content }}</div>
+      {% else %}
+        <div class="ai-product-tabs__empty-{{ ai_gen_id }}">Add content for the {{ block.settings.tab_2_label }} tab</div>
+      {% endif %}
+    </div>
+
+    <div
+      class="ai-product-tabs__panel-{{ ai_gen_id }}"
+      role="tabpanel"
+      aria-labelledby="tab-shipping-{{ ai_gen_id }}"
+      id="panel-shipping-{{ ai_gen_id }}"
+      data-panel="shipping"
+    >
+      {% if block.settings.tab_3_title != blank %}
+        <h3 class="ai-product-tabs__title-{{ ai_gen_id }}">{{ block.settings.tab_3_title }}</h3>
+      {% endif %}
+      {% if block.settings.tab_3_content != blank %}
+        <div class="ai-product-tabs__text-{{ ai_gen_id }}">{{ block.settings.tab_3_content }}</div>
+      {% else %}
+        <div class="ai-product-tabs__empty-{{ ai_gen_id }}">Add content for the {{ block.settings.tab_3_label }} tab</div>
+      {% endif %}
+    </div>
+  </div>
+</product-tabs-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductTabs{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.tabs = this.querySelectorAll('.ai-product-tabs__tab-{{ ai_gen_id }}');
+        this.panels = this.querySelectorAll('.ai-product-tabs__panel-{{ ai_gen_id }}');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.tabs.forEach((tab) => {
+          tab.addEventListener('click', (e) => {
+            this.switchTab(e.target.dataset.tab);
+          });
+
+          tab.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.switchTab(e.target.dataset.tab);
+            }
+          });
+        });
+      }
+
+      switchTab(targetTab) {
+        this.tabs.forEach((tab) => {
+          const isActive = tab.dataset.tab === targetTab;
+          tab.classList.toggle('active', isActive);
+          tab.setAttribute('aria-selected', isActive);
+        });
+
+        this.panels.forEach((panel) => {
+          const isActive = panel.dataset.panel === targetTab;
+          panel.classList.toggle('active', isActive);
+        });
+      }
+    }
+
+    customElements.define('product-tabs-{{ ai_gen_id }}', ProductTabs{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product information tabs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Tab labels"
+    },
+    {
+      "type": "text",
+      "id": "tab_1_label",
+      "label": "First tab label",
+      "default": "Description"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_label",
+      "label": "Second tab label",
+      "default": "Specifications"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_label",
+      "label": "Third tab label",
+      "default": "Shipping & Returns"
+    },
+    {
+      "type": "header",
+      "content": "First tab content"
+    },
+    {
+      "type": "text",
+      "id": "tab_1_title",
+      "label": "Title",
+      "default": "Product Description"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_1_content",
+      "label": "Content",
+      "default": "<p>The Pro Elite BJJ Gi represents the pinnacle of martial arts apparel engineering. Crafted from premium 450gsm pearl weave cotton, this gi delivers exceptional durability while maintaining the flexibility essential for advanced techniques.</p><p>Features include reinforced stress points, traditional cut for optimal mobility, and pre-shrunk fabric to ensure consistent fit. The jacket features a classic lapel design with contrast stitching, while the pants include a drawstring waist and reinforced knees.</p><p>Perfect for training and competition, this gi meets all IBJJF regulations and comes with a satisfaction guarantee.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Second tab content"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_title",
+      "label": "Title",
+      "default": "Specifications"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_2_content",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Third tab content"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_title",
+      "label": "Title",
+      "default": "Shipping & Returns"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_3_content",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Tab style"
+    },
+    {
+      "type": "color",
+      "id": "active_tab_color",
+      "label": "Active tab color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "inactive_tab_color",
+      "label": "Inactive tab color",
+      "default": "#666666"
+    },
+    {
+      "type": "select",
+      "id": "active_tab_weight",
+      "label": "Active tab weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "tab_font_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tab font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "tab_padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Tab padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "tab_spacing",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Tab spacing",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "underline_thickness",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Underline thickness",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "header",
+      "content": "Content style"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Title font size",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "title_margin",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Title bottom margin",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Content color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "content_font_size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Content font size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "content_line_height",
+      "label": "Content line height",
+      "options": [
+        {
+          "value": "1.4",
+          "label": "Tight"
+        },
+        {
+          "value": "1.6",
+          "label": "Normal"
+        },
+        {
+          "value": "1.8",
+          "label": "Loose"
+        }
+      ],
+      "default": "1.6"
+    },
+    {
+      "type": "range",
+      "id": "content_spacing",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Content top spacing",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product information tabs"
+    }
+  ]
+}
+{% endschema %}
